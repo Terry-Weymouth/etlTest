@@ -1,4 +1,8 @@
 import os
+probe = os.environ.get('MCDB_PORT')
+if not probe:
+    print("Unable to run without setting for MCDB_PORT")
+    exit(-1)
 import logging
 import sys
 import configparser
