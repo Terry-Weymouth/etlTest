@@ -5,6 +5,10 @@ from rethinkdb.errors import RqlDriverError, ReqlError
 
 _MCDB = "materialscommons"
 _MCDB_HOST = environ.get('MCDB_HOST') or 'localhost'
+probe = environ.get('MCDB_PORT')
+if not probe:
+    print("Unable to run without a setting for MCDB_PORT")
+    exit(-1)
 _MCDB_PORT = int(environ.get('MCDB_PORT'))
 
 

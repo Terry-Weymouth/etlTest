@@ -1,6 +1,7 @@
 import os
 import logging
 from materials_commons.etl.input_spreadsheet import BuildProjectExperiment
+from .DB import DbConnection
 from .globus_service import MaterialsCommonsGlobusInterface
 from .VerifySetup import VerifySetup
 import configparser
@@ -9,16 +10,7 @@ import configparser
 GLOBUS_QUEUE = 'elt:globus-transfer'
 PROCESS_QUEUE = 'etl:build-experiment'
 
-
-class Faktroy:
-    def __init__(self, project_id):
-        self.project_id = project_id
-        self.status = None
-        self.queue = None
-        self.extras = {}
-
-
-class Worker:
+class ETLWorker:
     def __init__(self, user_id):
         self.user_id = user_id
         self.log = logging.getLogger(__name__ + "." + self.__class__.__name__)
@@ -38,6 +30,7 @@ class Worker:
         data_file_path = "{}/{}".format(transfer_base_path, data_dir_relitive_path)
         self.log.info("excel_file_path = " + excel_file_path)
         self.log.info("data_file_path = " + data_file_path)
+        status_record = self.create_status_record(project_id, VERIFYING_SETUP)
         results = self.verify_preconditions(
             project_id, globus_endpoint, endpoint_path, transfer_base_path,
             excel_file_relative_path, data_dir_relitive_path

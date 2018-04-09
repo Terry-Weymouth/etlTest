@@ -1,16 +1,11 @@
 import os
-probe = os.environ.get('MCDB_PORT')
-if not probe:
-    print("Unable to run without setting for MCDB_PORT")
-    exit(-1)
 import logging
 import sys
 import configparser
-from etl.worker import Worker
+from etl.etlworker import ETLWorker
 
-
-user_endoint_config_file_path = os.path.join('.globus_test', 'endpoint.ini')
-config_file_locaton_for_user_endpoint = os.path.join(os.path.expanduser("~"), user_endoint_config_file_path)
+user_endpoint_config_file_path = os.path.join('.globus_test', 'endpoint.ini')
+config_file_locaton_for_user_endpoint = os.path.join(os.path.expanduser("~"), user_endpoint_config_file_path)
 
 
 def main():
@@ -49,7 +44,7 @@ def main():
     log.info("excel_file_relative_path = " + excel_file_relative_path)
     log.info("data_dir_relitive_path = " + data_dir_relitive_path)
 
-    worker = Worker(user_id)
+    worker = ETLWorker(user_id)
     worker.run_with(project_id, experiment_name, experiment_description,
                     globus_endpoint, endpoint_path, request_uuid,
                     excel_file_relative_path, data_dir_relitive_path)
