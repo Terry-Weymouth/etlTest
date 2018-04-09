@@ -26,7 +26,7 @@ def main():
     config.read(str(config_file_locaton_for_user_endpoint))
 
     user_id = "test@test.mc"
-    project_id = "4981e174-7aee-4729-b692-6134bd60dd9d"
+    project_id = "3751239e-c0eb-4af2-ae33-a89d1911b968"
     experiment_name = "Test from excel"
     experiment_description = "An experiment built via etl from test data"
     globus_endpoint = config['test']['endpoint']
